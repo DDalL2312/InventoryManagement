@@ -44,6 +44,21 @@ public class ProductController extends HttpServlet {
             }
             request.setAttribute("filter", id);
         }
+        if(action.equals("add")){
+           String name = request.getParameter("name");
+           int category_id = Integer.parseInt(request.getParameter("category"));
+           String img = "images/"+ request.getParameter("image");
+           double price = Double.parseDouble(request.getParameter("price"));
+           double rawprice = Double.parseDouble(request.getParameter("rawprice"));
+           int quantity = Integer.parseInt(request.getParameter("quantity"));
+           String receipt = request.getParameter("receipt");
+           Category cid = new Category(category_id);
+           //Category category,String name, double price, double rawPrice, int quantity, String img, String receipt
+           Product add = new Product(cid, name, price, rawprice, quantity, img, receipt);
+           pdao.insertProduct(add);
+           response.sendRedirect("product?action=all");
+           return;
+        }
         if (product != null) {
             int page, numperpage = 10;
             int type = 0;

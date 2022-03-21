@@ -29,6 +29,16 @@ public class Product {
         this.img = img;
         this.receipt = receipt;
     }
+    
+    public Product(Category category,String name, double price, double rawPrice, int quantity, String img, String receipt) {
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.rawPrice = rawPrice;
+        this.quantity = quantity;
+        this.img = img;
+        this.receipt = receipt;
+    }
 
     public Category getCategory() {
         return category;

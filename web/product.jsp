@@ -7,6 +7,73 @@
 
     <jsp:include page="layout/head.jsp"/>
     <body>
+        <style>
+            .Choicefile{
+                display: block;
+                background: #396CF0;
+                border: 1px solid #fff;
+                color: #fff;
+                width: 150px;
+                text-align: center;
+                text-decoration: none;
+                cursor: pointer;
+                padding: 5px 0px;
+                border-radius: 5px;
+                font-weight: 500;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .Choicefile:hover {
+                text-decoration: none;
+                color: white;
+            }
+
+            #uploadfile,
+            .removeimg {
+                display: none;
+            }
+
+            #thumbbox {
+                position: relative;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .removeimg {
+                height: 25px;
+                position: absolute;
+                background-repeat: no-repeat;
+                top: 5px;
+                left: 5px;
+                background-size: 25px;
+                width: 25px;
+                border-radius: 50%;
+
+            }
+
+            .removeimg::before {
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                content: '';
+                border: 1px solid red;
+                background: red;
+                text-align: center;
+                display: block;
+                margin-top: 11px;
+                transform: rotate(45deg);
+            }
+
+            .removeimg::after {
+                content: '';
+                background: red;
+                border: 1px solid red;
+                text-align: center;
+                display: block;
+                transform: rotate(-45deg);
+                margin-top: -2px;
+            }
+        </style>
         <jsp:include page="layout/preloader.jsp"/>
 
         <div class="page-wrapper doctris-theme toggled">
@@ -39,7 +106,7 @@
 
                                             <div class="col-sm-12 col-md-7 mt-4 mt-sm-0">
                                                 <div class="d-grid">
-                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appointmentform">Add product</a>
+                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">Add product</a>
                                                 </div>
                                             </div><!--end col-->
                                         </div><!--end row-->
@@ -108,6 +175,93 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom p-3">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-3 pt-4">
+                                <form action="product?action=add" method="POST">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <div>
+                                                    <p class="text-muted">Product picture.</p>
+                                                    <div id="myfileupload">
+                                                        <input type="file" name="image" id="uploadfile" name="ImageUpload" onchange="readURL(this);" />
+                                                    </div>
+                                                    <div id="thumbbox">
+                                                        <img class="rounded" height="20%" width="30%" alt="Thumb image" id="thumbimage" style="display: none" />
+                                                        <a class="removeimg" href="javascript:"></a>
+                                                    </div>
+                                                    <div id="boxchoice">
+                                                        <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i> Chọn ảnh</a>
+                                                        <p style="clear:both"></p>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-8 col-md-8">
+                                            <div class="mb-3">
+                                                <label class="form-label">Product Name <span class="text-danger">*</span></label>
+                                                <input name="name" id="name" type="text" class="form-control">
+                                            </div>
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Category</label>
+                                                <select name="category" class="form-control select2input">
+                                                    <c:forEach items="${CategoryData}" var="c">
+                                                        <option <c:if test="${filter == c.id}"> selected </c:if> value="${c.id}">${c.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Price <span class="text-danger">*</span></label>
+                                                <input name="price" type="number" class="form-control">
+                                            </div> 
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Raw Price <span class="text-danger">*</span></label>
+                                                <input name="rawprice" type="number" class="form-control">
+                                            </div> 
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Quantity <span class="text-danger">*</span></label>
+                                                <input name="quantity" type="number" class="form-control">
+                                            </div> 
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Receipts <span class="text-danger">*</span></label>
+                                                <input name="receipt" type="text" class="form-control" </input>
+                                            </div>
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-12">
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </div><!--end col-->
+                                    </div><!--end row-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <footer class="bg-white shadow py-3">
                     <div class="container-fluid">
                         <div class="row align-items-center">
@@ -135,9 +289,40 @@
         <script src="assets/js/feather.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script>
-                                                function filter(type) {
-                                                    window.location.href = "product?action=filter&id=" + type;
-                                                }
+                                        function filter(type) {
+                                            window.location.href = "product?action=filter&id=" + type;
+                                        }
+        </script>
+        <script>
+            function readURL(input, thumbimage) {
+                if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#thumbimage").attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                } else { // Sử dụng cho IE
+                    $("#thumbimage").attr('src', input.value);
+
+                }
+                $("#thumbimage").show();
+                $('.filename').text($("#uploadfile").val());
+                $(".Choicefile").hide();
+                $(".removeimg").show();
+            }
+            $(document).ready(function () {
+                $(".Choicefile").bind('click', function () {
+                    $("#uploadfile").click();
+
+                });
+                $(".removeimg").click(function () {
+                    $("#thumbimage").attr('src', '').hide();
+                    $("#myfileupload").html('<input type="file" id="uploadfile"  onchange="readURL(this);" />');
+                    $(".removeimg").hide();
+                    $(".Choicefile").show();
+                    $(".filename").text("");
+                });
+            })
         </script>
     </body>
 

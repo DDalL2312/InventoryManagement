@@ -39,7 +39,7 @@ public class ProductDAO {
         }
         return list;
     }
-    
+
     public List<Category> getCategory() {
         List<Category> list = new ArrayList<>();
         String sql = "select * from Category";
@@ -56,7 +56,7 @@ public class ProductDAO {
         }
         return list;
     }
-    
+
     public List<Product> getFilter(String id) {
         List<Product> list = new ArrayList<>();
         String sql = "select p.product_id, c.category_name, p.product_name, p.product_price, p.product_raw_price, p.quantity, p.img, p.receipts \n"
@@ -77,7 +77,30 @@ public class ProductDAO {
         }
         return list;
     }
-    
+
+    public void insertProduct(Product product) {
+        String sql = "insert into Products ([product_name]\n"
+                + "      ,[product_price]\n"
+                + "      ,[product_raw_price]\n"
+                + "      ,[quantity]\n"
+                + "      ,[img]\n"
+                + "      ,[category_id]\n"
+                + "      ,[receipts]) values(?,?,?,?,?,?,?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, product.getName());
+            ps.setDouble(2, product.getPrice());
+            ps.setDouble(3, product.getRawPrice());
+            ps.setInt(4, product.getQuantity());
+            ps.setString(5, product.getImg());
+            ps.setInt(6, product.getCategory().getId());
+            ps.setString(7, product.getReceipt());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public List<Product> getListByPage(List<Product> list,
             int start, int end) {
         ArrayList<Product> arr = new ArrayList<>();
@@ -86,12 +109,15 @@ public class ProductDAO {
         }
         return arr;
     }
-    
+
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
-        List<Product> list = dao.getProduct();
-        for (Product o : list) {
-            System.out.println(o.getCategory().getName());
-        }
-    } 
+//        List<Product> list = dao.getProduct();
+//        for (Product o : list) {
+//            System.out.println(o.getCategory().getName());
+//        }
+        
+        Product add = new Product(new Category(1), "heheee", 2432.0 , 24.0, 2, "fwef", "wew");
+        dao.insertProduct(add);
+    }
 }
