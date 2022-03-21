@@ -151,7 +151,7 @@
                                                     <td class="p-3">${p.receipt}</td>
                                                     <td class="text-end p-3">
                                                         <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#acceptappointment"><i class="uil uil-check-circle"></i></a>
-                                                        <a href="#" class="btn btn-icon btn-pills btn-soft-danger" data-bs-toggle="modal" data-bs-target="#cancelappointment"><i class="uil uil-times-circle"></i></a>
+                                                        <button class="btn btn-icon btn-pills btn-soft-danger delete" type="button" value="${p.id}"><i class="uil uil-times-circle"></i></button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -288,6 +288,7 @@
         <script src="assets/js/timepicker.init.js"></script> 
         <script src="assets/js/feather.min.js"></script>
         <script src="assets/js/app.js"></script>
+        <script src="assets/js/sweetalert.min.js"></script>
         <script>
                                         function filter(type) {
                                             window.location.href = "product?action=filter&id=" + type;
@@ -323,6 +324,26 @@
                     $(".filename").text("");
                 });
             })
+        </script>
+
+
+        <script>
+            $(document).ready(jQuery(function () {
+                jQuery(".delete").click(function () {
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Bạn có chắc chắn muốn xóa sp này?",
+                        buttons: ["Hủy bỏ", "Đồng ý"],
+                    })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    window.location = "product?action=remove&id=" + $(this).attr("value");
+                                    swal("Đã xóa thành công.!", {
+                                    });
+                                }
+                            });
+                });
+            }));
         </script>
     </body>
 

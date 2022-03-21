@@ -100,6 +100,17 @@ public class ProductDAO {
         } catch (Exception e) {
         }
     }
+    
+    public void deleteProduct(int id) {
+        String sql = "delete from Products where product_id= ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
     public List<Product> getListByPage(List<Product> list,
             int start, int end) {
