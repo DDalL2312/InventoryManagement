@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Mar 16, 2022, 2:54:18 PM
-    Author     : Khuong Hung
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="cookie" value="${pageContext.request.cookies}"/>
 <!DOCTYPE html>

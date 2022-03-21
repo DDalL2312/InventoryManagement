@@ -1,9 +1,3 @@
-<%-- 
-    Document   : sidebar
-    Created on : Mar 16, 2022, 2:40:40 PM
-    Author     : Khuong Hung
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">

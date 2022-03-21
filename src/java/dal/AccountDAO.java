@@ -16,10 +16,7 @@ import java.util.logging.Logger;
 import model.Role;
 import model.Account;
 
-/**
- *
- * @author DDalL
- */
+
 public class AccountDAO {
 
     PreparedStatement ps = null;

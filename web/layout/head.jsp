@@ -1,9 +1,3 @@
-<%-- 
-    Document   : head
-    Created on : Mar 16, 2022, 2:38:16 PM
-    Author     : Khuong Hung
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <head>
         <meta charset="utf-8" />

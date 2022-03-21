@@ -1,9 +1,3 @@
-<%-- 
-    Document   : menu
-    Created on : Mar 16, 2022, 2:44:11 PM
-    Author     : Khuong Hung
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="top-header">
     <div class="header-bar d-flex justify-content-between border-bottom">

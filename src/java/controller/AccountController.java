@@ -17,10 +17,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import model.*;
 
-/**
- *
- * @author Khuong Hung
- */
+
 public class AccountController extends HttpServlet {
 
     /**

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Mar 16, 2022, 2:34:41 PM
-    Author     : Khuong Hung
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
