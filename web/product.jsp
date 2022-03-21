@@ -28,12 +28,11 @@
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-sm-12 col-md-5">
                                                 <div class="mb-0 position-relative">
-                                                    <select class="form-control time-during select2input">
+                                                    <select onchange="filter(this.value)" class="form-control time-during select2input">
                                                         <option value="all">All</option>
                                                         <c:forEach items="${CategoryData}" var="c">
-                                                            <option value="${c.id}">${c.name}</option>
+                                                            <option <c:if test="${filter == c.id}"> selected </c:if> value="${c.id}">${c.name}</option>
                                                         </c:forEach>
-
                                                     </select>
                                                 </div>
                                             </div><!--end col-->
@@ -135,7 +134,11 @@
         <script src="assets/js/timepicker.init.js"></script> 
         <script src="assets/js/feather.min.js"></script>
         <script src="assets/js/app.js"></script>
-
+        <script>
+                                                function filter(type) {
+                                                    window.location.href = "product?action=filter&id=" + type;
+                                                }
+        </script>
     </body>
 
 </html>

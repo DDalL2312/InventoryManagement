@@ -29,10 +29,22 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ProductDAO pdao = new ProductDAO();
+        List<Product> product = null;
+        List<Category> category = pdao.getCategory();
         String action = request.getParameter("action");
         if (action.equals("all")) {
-            List<Product> product = pdao.getProduct();
-            List<Category> category = pdao.getCategory();
+            product = pdao.getProduct();
+        }
+        if (action.equals("filter")) {
+            String id = request.getParameter("id");
+            if (id.equals("all")) {
+                response.sendRedirect("product?action=all");
+            } else {
+                product = pdao.getFilter(id);
+            }
+            request.setAttribute("filter", id);
+        }
+        if (product != null) {
             int page, numperpage = 10;
             int type = 0;
             int size = product.size();
