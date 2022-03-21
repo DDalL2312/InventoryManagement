@@ -6,12 +6,13 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import dal.*;
+import java.util.List;
+import model.*;
 
 public class ProductController extends HttpServlet {
 
@@ -27,17 +28,31 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        ProductDAO pdao = new ProductDAO();
+        String action = request.getParameter("action");
+        if (action.equals("all")) {
+            List<Product> product = pdao.getProduct();
+            List<Category> category = pdao.getCategory();
+            int page, numperpage = 10;
+            int type = 0;
+            int size = product.size();
+            int num = (size % 10 == 0 ? (size / 10) : ((size / 10)) + 1);
+            String xpage = request.getParameter("page");
+            if (xpage == null) {
+                page = 1;
+            } else {
+                page = Integer.parseInt(xpage);
+            }
+            int start, end;
+            start = (page - 1) * numperpage;
+            end = Math.min(page * numperpage, size);
+            List<Product> productlist = pdao.getListByPage(product, start, end);
+            request.setAttribute("type", type);
+            request.setAttribute("page", page);
+            request.setAttribute("num", num);
+            request.setAttribute("CategoryData", category);
+            request.setAttribute("ProductData", productlist);
+            request.getRequestDispatcher("product.jsp").forward(request, response);
         }
     }
 
